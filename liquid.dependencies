@@ -37,9 +37,9 @@
     },    
     {
         "remote": "gh",
-        "repository": "legaCyMod/android_external_webkit",
+        "repository": "Dazzozo/android_external_webkit",
         "target_path": "external/webkit",
-        "revision": "cm-11.0"
+        "revision": "kitkat"
     },
     {
         "remote": "gh",
