@@ -1,6 +1,6 @@
 /*
 ** Copyright 2008, The Android Open-Source Project
-** Copyright (c) 2011-2012, Code Aurora Forum. All rights reserved.
+** Copyright (c) 2011-2012, The Linux Foundation. All rights reserved.
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -69,8 +69,8 @@ using android::Condition;
 #define MBADRC_DISABLE 0xFFEF
 #define SRS_ENABLE 0x0020
 #define SRS_DISABLE 0xFFDF
-#define LPA_BUFFER_SIZE 256*1024
-#define BUFFER_COUNT 4
+#define LPA_BUFFER_SIZE 512*1024
+#define BUFFER_COUNT 2
 
 #define AGC_ENABLE     0x0001
 #define NS_ENABLE      0x0002
@@ -211,7 +211,6 @@ public:
     // create I/O streams
     virtual AudioStreamOut* openOutputStream(
                                 uint32_t devices,
-                                //audio_output_flags_t flags,
                                 int *format=0,
                                 uint32_t *channels=0,
                                 uint32_t *sampleRate=0,
@@ -238,7 +237,7 @@ public:
 #endif
 protected:
     virtual status_t    dump(int fd, const Vector<String16>& args);
-    uint32_t getMvsMode(int format);
+    uint32_t getMvsMode(int format, int rate);
     uint32_t getMvsRateType(uint32_t MvsMode, uint32_t *rateType);
     status_t setupDeviceforVoipCall(bool value);
 
@@ -250,7 +249,7 @@ private:
     status_t    dumpInternals(int fd, const Vector<String16>& args);
     uint32_t    getInputSampleRate(uint32_t sampleRate);
     bool        checkOutputStandby();
-    status_t    doRouting(AudioStreamInMSM72xx *input);
+    status_t    doRouting(AudioStreamInMSM72xx *input, int outputDevice = 0);
 #ifdef QCOM_FM_ENABLED
     status_t    enableFM();
     status_t    disableFM();
@@ -325,8 +324,8 @@ private:
         virtual uint32_t    sampleRate() const { ALOGD(" AudioStreamOutDirect: sampleRate\n"); return 8000; }
         // must be 32-bit aligned - driver only seems to like 4800
         virtual size_t      bufferSize() const { ALOGD(" AudioStreamOutDirect: bufferSize\n"); return 320; }
-        virtual uint32_t    channels() const {ALOGD(" AudioStreamOutDirect: channels %d\n",mChannels); return mChannels; }
-        virtual int         format() const {ALOGD(" AudioStreamOutDirect: format\n"); return AudioSystem::PCM_16_BIT; }
+        virtual uint32_t    channels() const { ALOGD(" AudioStreamOutDirect: channels\n"); return mChannels; }
+        virtual int         format() const { ALOGD(" AudioStreamOutDirect: format\n"); return AudioSystem::PCM_16_BIT; }
         virtual uint32_t    latency() const { return (1000*AUDIO_HW_NUM_OUT_BUF*(bufferSize()/frameSize()))/sampleRate()+AUDIO_HW_OUT_LATENCY_MS; }
         virtual status_t    setVolume(float left, float right) { return INVALID_OPERATION; }
         virtual ssize_t     write(const void* buffer, size_t bytes);
@@ -414,7 +413,7 @@ public:
     virtual status_t    getBufferInfo(buf_info **buf);
     virtual status_t    isBufferAvailable(int *isAvail);
 
-    void* memBufferAlloc(int nSize, int32_t *ion_fd);
+	void* memBufferAlloc(int nSize, int32_t *ion_fd);
 
 private:
     Mutex               mLock;
@@ -572,6 +571,7 @@ private:
         virtual unsigned int  getInputFramesLost() const { return 0; }
                 uint32_t    devices() { return mDevices; }
                 int         state() const { return mState; }
+                bool        mSetupDevice;
 
     private:
                 AudioHardware* mHardware;
@@ -613,9 +613,6 @@ private:
             msm_snd_endpoint *mSndEndpoints;
             int mNumSndEndpoints;
 
-            msm_cad_endpoint *mCadEndpoints;
-            int mNumCadEndpoints;
-
             int mCurSndDevice;
             int m7xsnddriverfd;
             bool        mDualMicEnabled;
@@ -625,6 +622,7 @@ private:
             bool mVoipInActive;
             bool mVoipOutActive;
             Mutex       mVoipLock;
+            int         mDirectOutrefCnt;
 #endif /*QCOM_VOIP_ENABLED*/
      friend class AudioStreamInMSM72xx;
             Mutex       mLock;

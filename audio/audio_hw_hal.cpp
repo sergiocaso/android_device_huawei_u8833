@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2011 The Android Open Source Project
- * Copyright (c) 2012, Code Aurora Forum. All rights reserved.
+ * Copyright (c) 2012, The Linux Foundation. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -487,6 +487,13 @@ static int adev_get_master_volume(struct audio_hw_device *dev, float *volume) {
     struct qcom_audio_device *qadev = to_ladev(dev);
     return qadev->hwif->getMasterVolume(volume);
 }
+#ifdef QCOM_FM_ENABLED
+static int adev_set_fm_volume(struct audio_hw_device *dev, float volume)
+{
+    struct qcom_audio_device *qadev = to_ladev(dev);
+    return qadev->hwif->setFmVolume(volume);
+}
+#endif
 
 static int adev_set_mode(struct audio_hw_device *dev, audio_mode_t mode)
 {
@@ -712,6 +719,9 @@ static int qcom_adev_open(const hw_module_t* module, const char* name,
     qadev->device.set_voice_volume = adev_set_voice_volume;
     qadev->device.set_master_volume = adev_set_master_volume;
     qadev->device.get_master_volume = adev_get_master_volume;
+#ifdef QCOM_FM_ENABLED
+    qadev->device.set_fm_volume = adev_set_fm_volume;
+#endif
     qadev->device.set_mode = adev_set_mode;
     qadev->device.set_mic_mute = adev_set_mic_mute;
     qadev->device.get_mic_mute = adev_get_mic_mute;
@@ -751,7 +761,7 @@ struct qcom_audio_module HAL_MODULE_INFO_SYM = {
             hal_api_version: HARDWARE_HAL_API_VERSION,
             id: AUDIO_HARDWARE_MODULE_ID,
             name: "QCOM Audio HW HAL",
-            author: "Code Aurora Forum",
+            author: "The Linux Foundation",
             methods: &qcom_audio_module_methods,
             dso : NULL,
             reserved : {0},
