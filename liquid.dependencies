@@ -7,7 +7,7 @@
     },
     {
         "remote": "gh",
-        "repository": "HuaweiLiquid/android_device_huawei_msm7x27a-common",
+        "repository": "Y300-0100/android_device_huawei_msm7x27a-common",
         "target_path": "device/huawei/msm7x27a-common",
         "revision": "kitkat"
     },
@@ -19,7 +19,7 @@
     },
     {
         "remote": "gh",
-        "repository": "HuaweiLiquid/proprietary_vendor_huawei",
+        "repository": "Y300-0100/proprietary_vendor_huawei",
         "target_path": "vendor/huawei",
         "revision": "kitkat"
     },
