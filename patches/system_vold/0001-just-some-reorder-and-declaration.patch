@@ -1,0 +1,106 @@
+From d7542fad05dee73afe6fa2ff5c3a027aacfea84c Mon Sep 17 00:00:00 2001
+From: Y300-0100 <bosko.brajovich@gmail.com>
+Date: Sat, 13 Sep 2014 16:52:14 +0200
+Subject: [PATCH 1/2] just some reorder and declaration
+
+In order that we can chose in settings mount point for media and data to be first for diferent devices.
+---
+ DirectVolume.cpp | 52 ++++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 34 insertions(+), 18 deletions(-)
+
+diff --git a/DirectVolume.cpp b/DirectVolume.cpp
+index c7e413d..0906561 100644
+--- a/DirectVolume.cpp
++++ b/DirectVolume.cpp
+@@ -24,6 +24,7 @@
+ #define LOG_TAG "DirectVolume"
+ 
+ #include <cutils/log.h>
++#include <cutils/properties.h>
+ #include <sysutils/NetlinkEvent.h>
+ 
+ #include "DirectVolume.h"
+@@ -35,6 +36,9 @@
+ 
+ DirectVolume::DirectVolume(VolumeManager *vm, const fstab_rec* rec, int flags) :
+         Volume(vm, rec, flags) {
++    char mount_media[PATH_MAX];
++    char mount_fuse[PATH_MAX];
++    char switchable[PROPERTY_VALUE_MAX];
+     mPaths = new PathCollection();
+     for (int i = 0; i < MAX_PARTITIONS; i++)
+         mPartMinors[i] = -1;
+@@ -51,41 +55,53 @@ DirectVolume::DirectVolume(VolumeManager *vm, const fstab_rec* rec, int flags) :
+               rec->mount_point);
+     }
+ 
+-    char mount_media[PATH_MAX];
+-    char mount_fuse[PATH_MAX];
+-    char switchable[PROPERTY_VALUE_MAX];
++    char mount[PATH_MAX];
+ 
+ #ifdef MINIVOLD
+-    // In recovery, directly mount to /storage/* since we have no fuse daemon
+-    snprintf(mount_fuse, PATH_MAX, "%s/%s", Volume::FUSE_DIR, rec->label);
+-    mMountpoint = mFuseMountpoint = strdup(mount_fuse);
++// In recovery, directly mount to /storage/* since we have no fuse daemon
++       snprintf(mount, PATH_MAX, "%s/%s", Volume::FUSE_DIR, rec->label);
++       mMountpoint = mFuseMountpoint = strdup(mount);
+ #else
+-    snprintf(mount_media, PATH_MAX, "%s/%s", Volume::MEDIA_DIR, rec->label);
+-    snprintf(mount_fuse, PATH_MAX, "%s/%s", Volume::FUSE_DIR, rec->label);
++       snprintf(mount, PATH_MAX, "%s/%s", Volume::MEDIA_DIR, rec->label);
++       mMountpoint = strdup(mount);
++       snprintf(mount, PATH_MAX, "%s/%s", Volume::FUSE_DIR, rec->label);
++       mFuseMountpoint = strdup(mount);
+ 
+     property_get("persist.sys.vold.switchexternal", switchable, "0");
+     if (!strcmp(switchable,"1")) {
+         char *first, *second = NULL;
++        char label[PATH_MAX];
+         const char *delim = ",";
++        int lblidx = strlen(Volume::FUSE_DIR) + 1;
++        bool swap = true;
+ 
+         property_get("persist.sys.vold.switchablepair", switchable, "");
++
+         if (!(first = strtok(switchable, delim))) {
+             SLOGE("Mount switch requested, but no switchable mountpoints found");
++            swap = false;
+         } else if (!(second = strtok(NULL, delim))) {
+             SLOGE("Mount switch requested, but bad switchable mountpoints found");
+-        } else {
+-            if (!strcmp(rec->label,first)) {
+-                snprintf(mount_media, PATH_MAX, "%s/%s", Volume::MEDIA_DIR, second);
+-                snprintf(mount_fuse, PATH_MAX, "%s/%s", Volume::FUSE_DIR, second);
+-            } else if (!strcmp(rec->label,second)) {
+-                snprintf(mount_media, PATH_MAX, "%s/%s", Volume::MEDIA_DIR, first);
+-                snprintf(mount_fuse, PATH_MAX, "%s/%s", Volume::FUSE_DIR, first);
++            swap = false;
++        }
++        
++        if (swap) {
++            free(mMountpoint);
++            free(mFuseMountpoint);
++
++            if (!strcmp(mount,first)) {
++                mFuseMountpoint = strdup(second);
++                strcpy(label, second+lblidx);
++                snprintf(second, PATH_MAX, "%s/%s", Volume::MEDIA_DIR, label);
++                mMountpoint = strdup(second);
++            } else if (!strcmp(mount,second)) {
++                mFuseMountpoint = strdup(first);
++                strcpy(label, first+lblidx);
++                snprintf(first, PATH_MAX, "%s/%s", Volume::MEDIA_DIR, label);
++                mMountpoint = strdup(first);
+             }
+         }
+     }
+-
+-    mMountpoint = strdup(mount_media);
+-    mFuseMountpoint = strdup(mount_fuse);
+ #endif
+ 
+     setState(Volume::State_NoMedia);
+-- 
+1.9.1

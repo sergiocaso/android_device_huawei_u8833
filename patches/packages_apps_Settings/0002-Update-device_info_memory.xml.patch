@@ -1,0 +1,27 @@
+From f405a1b768beff5e7a13f9601dc66de5daf0c800 Mon Sep 17 00:00:00 2001
+From: Y300-0100 <bosko.brajovich@gmail.com>
+Date: Sat, 2 Aug 2014 14:19:50 +0200
+Subject: [PATCH 2/3] Update device_info_memory.xml
+
+---
+ res/xml/device_info_memory.xml |    5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/res/xml/device_info_memory.xml b/res/xml/device_info_memory.xml
+index 356beaf..1b3e5b4 100644
+--- a/res/xml/device_info_memory.xml
++++ b/res/xml/device_info_memory.xml
+@@ -16,6 +16,11 @@
+ 
+ <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+         android:title="@string/storage_settings_title">
++    <CheckBoxPreference
++        android:key="key_switch_storage"
++        android:title="@string/storage_switch_title"
++        android:summaryOn="@string/storage_switch_summary_on"
++        android:summaryOff="@string/storage_switch_summary_off" />
+ 
+ <!-- Preference categories are dynamically created based on the list of available storage volumes -->
+     <!-- Partition info -->
+-- 
+1.7.9.5

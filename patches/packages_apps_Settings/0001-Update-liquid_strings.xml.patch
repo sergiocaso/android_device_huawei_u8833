@@ -1,0 +1,29 @@
+From a74ee526f2e754b4de18f5647ee6cb6e271a50a6 Mon Sep 17 00:00:00 2001
+From: Y300-0100 <bosko.brajovich@gmail.com>
+Date: Sun, 31 Aug 2014 00:39:24 +0200
+Subject: [PATCH] Update liquid_strings.xml
+
+---
+ res/values/liquid_strings.xml | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/res/values/liquid_strings.xml b/res/values/liquid_strings.xml
+index 6129bf9..a6352c8 100644
+--- a/res/values/liquid_strings.xml
++++ b/res/values/liquid_strings.xml
+@@ -1270,6 +1270,13 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
+     <!-- About device screen, CPU and RAM info. -->
+     <string name="cpu_info">CPU</string>
+     <string name="mem_info">Memory</string>
++    
++    <!-- Vold Switchable Pair -->
++    <string name="storage_switch_title">Use external SD as primary</string>
++    <string name="storage_switch_summary_off">Using expanded internal storage for apps and media</string>
++    <string name="storage_switch_summary_on">Using SD Card for apps and media</string>
++    <string name="reboot_prompt_title">Reboot required</string>
++    <string name="reboot_prompt_message">In order to apply the changed configuration, a reboot is required.\n\nDo you want to reboot now?</string>
+ 
+     <!-- Android debugging over WiFi -->
+     <string name="adb_over_network">ADB over network</string>
+-- 
+1.9.1

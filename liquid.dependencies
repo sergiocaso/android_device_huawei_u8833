@@ -3,19 +3,13 @@
         "remote": "cm",
         "repository": "android_device_qcom_common",
         "target_path": "device/qcom/common",
-        "revision": "cm-12.0"
+        "revision": "cm-11.0"
     },
     {
         "remote": "gh",
-        "repository": "HuaweiLiquid/android_device_huawei_msm7x27a-common",
-        "target_path": "device/huawei/msm7x27a-common",
-        "revision": "kitkat"
-    },
-    {
-        "remote": "gh",
-        "repository": "HuaweiLiquid/android_kernel_huawei_msm8x25-common",
+        "repository": "chil360/chil360-kernel",
         "target_path": "kernel/huawei/huawei-kernel-3.4",
-        "revision": "jb"
+        "revision": "kitkat"
     },
     {
         "remote": "gh",
@@ -34,30 +28,24 @@
         "repository": "legaCyMod/android_hardware_atheros_wlan",
         "target_path": "hardware/atheros/wlan",
         "revision": "cm-11.0"
-    },    
-    {
-        "remote": "gh",
-        "repository": "Dazzozo/android_external_webkit",
-        "target_path": "external/webkit",
-        "revision": "kitkat"
-    },
-    {
-        "remote": "gh",
-        "repository": "Dazzozo/android_hardware_qcom_display-legacy",
-        "target_path": "hardware/qcom/display-legacy",
-        "revision": "jellybean-mr2"
-    },
-    {
-        "remote": "gh",
-        "repository": "Dazzozo/android_hardware_qcom_media-legacy",
-        "target_path": "hardware/qcom/media-legacy",
-        "revision": "kitkat"
-    },    
+    },  
     {
         "remote": "cm",
         "repository": "android_hardware_qcom_fm",
         "target_path": "hardware/qcom/fm",
         "revision": "cm-12.0"
-    }    
+    },  
+    {
+        "remote": "cm",
+        "repository": "android_hardware_qcom_display-caf-new",
+        "target_path": "hardware/qcom/display-caf-new",
+        "revision": "cm-12.0"
+    },  
+    {
+        "remote": "cm",
+        "repository": "android_hardware_qcom_media-caf-new",
+        "target_path": "hardware/qcom/media-caf-new",
+        "revision": "cm-12.0"
+    }             
 ]
 
