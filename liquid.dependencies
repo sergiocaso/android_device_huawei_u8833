@@ -15,7 +15,7 @@
         "remote": "gh",
         "repository": "HuaweiLiquid/proprietary_vendor_huawei",
         "target_path": "vendor/huawei",
-        "revision": "kitkat"
+        "revision": "lollipop"
     },
     {
         "remote": "gh",
