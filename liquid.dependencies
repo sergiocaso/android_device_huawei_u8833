@@ -9,7 +9,7 @@
         "remote": "gh",
         "repository": "chil360/chil360-kernel",
         "target_path": "kernel/huawei/huawei-kernel-3.4",
-        "revision": "kitkat"
+        "revision": "experimental"
     },
     {
         "remote": "gh",
