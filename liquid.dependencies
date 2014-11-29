@@ -13,7 +13,7 @@
     },
     {
         "remote": "gh",
-        "repository": "HuaweiLiquid/proprietary_vendor_huawei",
+        "repository": "Y300-0100/proprietary_vendor_huawei",
         "target_path": "vendor/huawei",
         "revision": "lollipop"
     },
