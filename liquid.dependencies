@@ -7,6 +7,12 @@
     },
     {
         "remote": "gh",
+        "repository": "Y300-0100/android_device_huawei_msm7x27a-common",
+        "target_path": "device/huawei/msm7x27a-common",
+        "revision": "lollipop"
+    },
+    {
+        "remote": "gh",
         "repository": "chil360/chil360-kernel",
         "target_path": "kernel/huawei/huawei-kernel-3.4",
         "revision": "experimental"
