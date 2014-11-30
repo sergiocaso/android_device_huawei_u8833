@@ -16,11 +16,6 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(PRODUCT_MANUFACTURER),HUAWEI)
-ifeq ($(TARGET_BOARD_PLATFORM),msm7x27a)
-include $(call all-makefiles-under,$(LOCAL_PATH))
 ifneq ($(filter u8825 u8833 u8951,$(TARGET_DEVICE)),)
 include $(call all-makefiles-under,$(LOCAL_PATH))
-endif
-endif
 endif

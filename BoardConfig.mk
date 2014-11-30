@@ -17,17 +17,11 @@
 # Inherit from the proprietary version
 -include vendor/huawei/u8833/BoardConfigVendor.mk
 
+# Inherit from the common msm7x27a definitions
+-include device/huawei/msm7x27a-common/BoardConfigCommon.mk
+
 # Architecture and CPU
-TARGET_ARCH := arm
-TARGET_ARCH_VARIANT := armv7-a-neon
-TARGET_CPU_ABI := armeabi-v7a
-TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_SMP := true
-TARGET_CPU_VARIANT := cortex-a5
-TARGET_BOARD_PLATFORM := msm7x27a
-TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
-ARCH_ARM_HAVE_TLS_REGISTER := true
-TARGET_ARCH_LOWMEM := true
 
 TARGET_BOOTLOADER_BOARD_NAME := u8833
 TARGET_OTA_ASSERT_DEVICE := u8833,hwu8833,u8951,hwu8951
@@ -64,7 +58,7 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 1207943168 # 0x47FFC000
 
 # Recovery
 BOARD_CUSTOM_GRAPHICS := ../../../device/huawei/u8833/recovery/graphics.c
-TARGET_RECOVERY_FSTAB := device/huawei/u8833/ramdisk/fstab.huawei
+TARGET_RECOVERY_FSTAB := device/huawei/u8833/rootdir/fstab.huawei
 
 # RIL
 BOARD_RIL_CLASS := ../../../device/huawei/u8833/ril/
