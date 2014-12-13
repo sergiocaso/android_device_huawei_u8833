@@ -19,13 +19,6 @@ $(call inherit-product, device/huawei/msm7x27a-common/msm7x27a.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/huawei/u8833/overlay
 
-# Packages
-PRODUCT_PACKAGES += \
-    FM2 \
-    FMRecord \
-    libqcomfm_jni \
-    qcom.fmradio
-
 # Files
 PRODUCT_COPY_FILES += \
     device/huawei/u8833/rootdir/fstab.huawei:root/fstab.huawei \
@@ -47,8 +40,7 @@ PRODUCT_COPY_FILES += \
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
-    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
-    frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml
+    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
 
 # Properties
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -57,29 +49,24 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.confg.hw_appversion=U8833V4_4_KERNEL
 
 PRODUCT_PROPERTY_OVERRIDES += \
+    gsm.version.baseband=2030 \
+    rild.libpath=/system/lib/libril-qc-qmi-1.so \
+    ro.telephony.ril.v3=qcomdsds,skippinpukcount,signalstrength \
+    ro.telephony.ril_class=HuaweiQualcommRIL
+
+PRODUCT_PROPERTY_OVERRIDES += \
     ro.fm.analogpath.supported=false \
     ro.fm.transmitter=false \
     ro.fm.mulinst.recording.support=false
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    gsm.version.baseband=2030 \
-    rild.libpath=/system/lib/libril-qc-qmi-1.so \
-    ro.telephony.ril.v3=qcomdsds,skippinpukcount \
-    ro.telephony.ril_class=HuaweiQualcommRIL
-
-# Stagefright
-PRODUCT_PROPERTY_OVERRIDES += \
-    media.stagefright.enable-player=true \
-    media.stagefright.enable-meta=false \
-    media.stagefright.enable-scan=true \
-    media.stagefright.enable-http=true \
-    media.stagefright.enable-fma2dp=true \
-    media.stagefright.enable-aac=true \
-    media.stagefright.enable-qcp=true
+PRODUCT_PACKAGES += \
+   FM2 \
+   FMRecord \
+   libqcomfm_jni \
+   qcom.fmradio
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full.mk)
 
 $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
 
 $(call inherit-product, vendor/huawei/u8833/u8833-vendor.mk)
-
