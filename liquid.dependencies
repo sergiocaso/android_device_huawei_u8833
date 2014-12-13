@@ -9,19 +9,19 @@
         "remote": "gh",
         "repository": "Y300-0100/android_device_huawei_msm7x27a-common",
         "target_path": "device/huawei/msm7x27a-common",
-        "revision": "lollipop"
+        "revision": "caf"
     },
     {
         "remote": "gh",
-        "repository": "chil360/chil360-kernel",
+        "repository": "Y300-0100/chil360-kernel",
         "target_path": "kernel/huawei/huawei-kernel-3.4",
-        "revision": "experimental"
+        "revision": "caf"
     },
     {
         "remote": "gh",
         "repository": "Y300-0100/proprietary_vendor_huawei",
         "target_path": "vendor/huawei",
-        "revision": "lollipop"
+        "revision": "caf"
     },
     {
         "remote": "gh",
